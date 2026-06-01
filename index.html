@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Untuk Nabila ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --rose:    #ff4f7b;
+  --blush:   #ffb3c6;
+  --cream:   #fff0f5;
+  --deep:    #c2185b;
+  --glass:   rgba(255,255,255,0.18);
+}
+
+*, *::before, *::after {
+  margin: 0; padding: 0; box-sizing: border-box;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  background: #1a0010;
+  color: white;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── Custom cursor ── */
+#cursor {
+  position: fixed;
+  width: 18px; height: 18px;
+  background: var(--rose);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%,-50%);
+  transition: transform .1s, width .2s, height .2s;
+  mix-blend-mode: screen;
+}
+
+/* ── Canvas background ── */
+#bgCanvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+
+/* ──────────── OVERLAY KEJUTAN ──────────── */
+#surprise {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at 50% 60%, #3d0020 0%, #1a0010 100%);
+  transition: opacity .8s, visibility .8s;
+}
+#surprise.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.gift-icon {
+  font-size: 90px;
+  animation: bounce 1.6s ease-in-out infinite;
+  filter: drop-shadow(0 0 30px #ff4f7b88);
+}
+@keyframes bounce {
+  0%,100% { transform: translateY(0) rotate(-5deg); }
+  50%      { transform: translateY(-22px) rotate(5deg); }
+}
+
+#surprise h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(18px, 4vw, 26px);
+  margin: 24px 20px 36px;
+  text-align: center;
+  color: var(--blush);
+  line-height: 1.6;
+}
+
+.btn-open {
+  padding: 16px 44px;
+  border: 2px solid var(--rose);
+  border-radius: 60px;
+  background: transparent;
+  color: white;
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  cursor: none;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+  transition: color .3s;
+}
+.btn-open::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--rose);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .35s ease;
+  z-index: -1;
+  border-radius: 60px;
+}
+.btn-open:hover::before { transform: scaleX(1); }
+.btn-open:hover { color: white; }
+.btn-open:active { transform: scale(.96); }
+
+/* ──────────── MAIN CONTENT ──────────── */
+#mainContent {
+  display: none;
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 1s;
+}
+#mainContent.visible { opacity: 1; }
+
+/* ── Hero ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.hero-eyebrow {
+  font-size: 13px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--blush);
+  opacity: .7;
+  margin-bottom: 20px;
+}
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(52px, 12vw, 110px);
+  line-height: 1;
+  background: linear-gradient(135deg, #fff 30%, var(--blush) 70%, var(--rose));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+  background-size: 200% 200%;
+}
+@keyframes shimmer {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+.typing-line {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(20px, 4vw, 32px);
+  font-style: italic;
+  color: var(--blush);
+  margin-top: 18px;
+  min-height: 42px;
+}
+
+#counter {
+  margin-top: 28px;
+  font-size: 15px;
+  letter-spacing: 2px;
+  color: var(--blush);
+  opacity: .85;
+}
+
+.scroll-hint {
+  margin-top: 60px;
+  animation: fadeUpDown 2s ease-in-out infinite;
+  font-size: 28px;
+  opacity: .5;
+}
+@keyframes fadeUpDown {
+  0%,100% { transform: translateY(0); opacity:.4; }
+  50%      { transform: translateY(10px); opacity:.9; }
+}
+
+/* ── Sections ── */
+.section {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 80px 24px;
+}
+
+/* ── Glass card ── */
+.glass-card {
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 28px;
+  padding: 44px 40px;
+  position: relative;
+  overflow: hidden;
+}
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(255,79,123,.25), transparent 70%);
+  border-radius: 50%;
+}
+
+.card-label {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--rose);
+  margin-bottom: 20px;
+}
+
+.card-text {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(16px, 2.5vw, 19px);
+  line-height: 2;
+  color: rgba(255,255,255,.9);
+}
+
+.card-sign {
+  margin-top: 32px;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 20px;
+  color: var(--blush);
+  text-align: right;
+}
+
+/* ── Gallery ── */
+.gallery-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(26px, 5vw, 38px);
+  text-align: center;
+  margin-bottom: 36px;
+  color: var(--blush);
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.gallery-grid img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  border-radius: 20px;
+  border: 2px solid rgba(255,255,255,.2);
+  box-shadow: 0 8px 32px rgba(0,0,0,.4);
+  transition: transform .4s cubic-bezier(.22,1,.36,1), box-shadow .4s;
+  display: block;
+}
+.gallery-grid img:hover {
+  transform: scale(1.06) translateY(-6px);
+  box-shadow: 0 20px 48px rgba(255,79,123,.35);
+}
+
+/* ── Love button ── */
+.love-section {
+  text-align: center;
+  padding: 80px 24px 100px;
+}
+
+.btn-love {
+  padding: 18px 52px;
+  border-radius: 60px;
+  border: none;
+  background: linear-gradient(135deg, var(--rose), var(--deep));
+  color: white;
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  cursor: none;
+  box-shadow: 0 6px 30px rgba(255,79,123,.45);
+  transition: transform .25s, box-shadow .25s;
+}
+.btn-love:hover {
+  transform: scale(1.08) translateY(-3px);
+  box-shadow: 0 14px 40px rgba(255,79,123,.6);
+}
+.btn-love:active { transform: scale(.97); }
+
+#loveMsg {
+  display: none;
+  margin-top: 32px;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(20px, 4vw, 28px);
+  font-style: italic;
+  color: var(--blush);
+  animation: fadeIn .8s ease;
+}
+@keyframes fadeIn {
+  from { opacity:0; transform:translateY(18px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* ── Floating hearts ── */
+.heart {
+  position: fixed;
+  bottom: -30px;
+  font-size: clamp(18px, 3vw, 28px);
+  animation: rise linear forwards;
+  pointer-events: none;
+  z-index: 500;
+  will-change: transform;
+}
+@keyframes rise {
+  0%   { transform: translateY(0) rotate(0deg);   opacity: 1; }
+  100% { transform: translateY(-105vh) rotate(40deg); opacity: 0; }
+}
+
+/* ── Click spark ── */
+.spark {
+  position: fixed;
+  font-size: 22px;
+  pointer-events: none;
+  z-index: 9000;
+  animation: spark .9s ease forwards;
+}
+@keyframes spark {
+  0%   { opacity:1; transform:translate(-50%,-50%) scale(1); }
+  100% { opacity:0; transform:translate(-50%,-80px) scale(.4); }
+}
+
+/* ── Music notice ── */
+#musicNotice {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 50px;
+  padding: 10px 20px;
+  font-size: 13px;
+  color: var(--blush);
+  display: none;
+  animation: fadeIn .6s ease;
+  cursor: none;
+}
+
+/* ──── Scroll reveal ──── */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity .9s ease, transform .9s ease;
+}
+.reveal.shown {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div id="cursor"></div>
+
+<!-- Animated BG Canvas -->
+<canvas id="bgCanvas"></canvas>
+
+<!-- Music -->
+<audio id="music" loop>
+  <source src="ssstik.io_1780301128213-1.mp3" type="audio/mpeg">
+</audio>
+
+<!-- ── OVERLAY KEJUTAN ── -->
+<div id="surprise">
+  <div class="gift-icon">🎁</div>
+  <h2>Ada sesuatu yang spesial<br>nunggu kamu di sini ❤️</h2>
+  <button class="btn-open" onclick="bukaKejutan()">Buka Kejutan ❤️</button>
+</div>
+
+<!-- ── MAIN CONTENT ── -->
+<div id="mainContent">
+
+  <!-- Hero -->
+  <section class="hero">
+    <p class="hero-eyebrow">Sebuah pesan kecil</p>
+    <h1 class="hero-title">Nabila</h1>
+    <p class="typing-line"><span id="typing"></span><span class="cursor-blink">|</span></p>
+    <p id="counter"></p>
+    <div class="scroll-hint">↓</div>
+  </section>
+
+  <!-- Surat -->
+  <section class="section reveal">
+    <div class="glass-card">
+      <p class="card-label">✦ Untuk kamu</p>
+      <p class="card-text">
+        Halo Sayang ❤️
+        <br><br>
+        Terima kasih sudah hadir dan menjadi bagian dari hari-hariku.
+        <br><br>
+        Kamu cantik, sayang. Jadi jangan pernah merasa kurang
+        atau insecure sama diri sendiri ya — aku suka kamu apa adanya.
+        <br><br>
+        Semoga kamu selalu bahagia, selalu sehat,
+        dan selalu tersenyum setiap hari.
+        <br><br>
+        ✨ Kamu spesial ✨
+      </p>
+      <p class="card-sign">— Adi ❤️</p>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section class="section reveal">
+    <h2 class="gallery-title">Foto-foto kita 📸</h2>
+    <div class="gallery-grid">
+      <img src="IMG_20260526_120235_150.jpg"  alt="Foto bersama 1">
+      <img src="IMG20260213212643.jpg"         alt="Foto bersama 2">
+      <img src="IMG20260427002903.jpg"         alt="Foto bersama 3">
+      <img src="IMG20260213213035.jpg"         alt="Foto bersama 4">
+      <img src="IMG_0005.JPG"        
+              alt="Foto bersama 5">
+      <img src="41e66134acbf196dcabfe190e65fe628_0.jpeg"      
+               alt="Foto bersama 6"
+      ><img src="IMG_20260427_024105_313.webp"        
+               alt="Foto bersama 7">
+    </div>
+  </section>
+
+  <!-- Love Button -->
+  <section class="love-section reveal">
+    <button class="btn-love" onclick="tampilLove()">🥺 Pencet Aku Dong 🥺</button>
+    <p id="loveMsg">💖 Adi sayang sama Nabila 💖</p>
+  </section>
+
+</div>
+
+<!-- Music notice -->
+<div id="musicNotice">🎵 Musik gagal diputar otomatis — tap di mana saja</div>
+
+<style>
+.cursor-blink {
+  animation: blink .8s step-end infinite;
+  color: var(--rose);
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+</style>
+
+<script>
+/* ── Cursor ── */
+const cur = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cur.style.left = e.clientX + 'px';
+  cur.style.top  = e.clientY + 'px';
+});
+
+/* ── Canvas BG: particle field ── */
+(function(){
+  const c = document.getElementById('bgCanvas');
+  const ctx = c.getContext('2d');
+  let W, H, particles = [];
+
+  function resize(){
+    W = c.width  = window.innerWidth;
+    H = c.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  for(let i=0; i<70; i++){
+    particles.push({
+      x: Math.random()*window.innerWidth,
+      y: Math.random()*window.innerHeight,
+      r: Math.random()*2+.5,
+      dx: (Math.random()-.5)*.3,
+      dy: (Math.random()-.5)*.3,
+      a: Math.random()
+    });
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    // deep gradient bg
+    const g = ctx.createRadialGradient(W*.5, H*.6, 0, W*.5, H*.5, Math.max(W,H));
+    g.addColorStop(0,'#3d0020');
+    g.addColorStop(1,'#0d000a');
+    ctx.fillStyle = g;
+    ctx.fillRect(0,0,W,H);
+
+    particles.forEach(p => {
+      p.x += p.dx; p.y += p.dy;
+      if(p.x<0)p.x=W; if(p.x>W)p.x=0;
+      if(p.y<0)p.y=H; if(p.y>H)p.y=0;
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle = `rgba(255,150,180,${p.a*.6})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ── Open surprise ── */
+let heartInterval = null;
+
+function bukaKejutan(){
+  document.getElementById('surprise').classList.add('hidden');
+  const main = document.getElementById('mainContent');
+  main.style.display = 'block';
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => { main.classList.add('visible'); });
+  });
+
+  const music = document.getElementById('music');
+  music.play().catch(() => {
+    document.getElementById('musicNotice').style.display = 'block';
+  });
+
+  heartInterval = setInterval(buatHati, 500);
+  ketik();
+  updateCounter();
+  setInterval(updateCounter, 60000);
+  initReveal();
+}
+
+/* ── Resume music on tap (if blocked) ── */
+document.addEventListener('click', () => {
+  const m = document.getElementById('music');
+  if(m.paused && document.getElementById('mainContent').style.display !== 'none'){
+    m.play().then(() => {
+      document.getElementById('musicNotice').style.display = 'none';
+    }).catch(()=>{});
+  }
+}, { once: false });
+
+/* ── Typing effect ── */
+const text = '❤️ untuk kamu sayang ❤️';
+let i = 0;
+function ketik(){
+  if(i < text.length){
+    document.getElementById('typing').innerHTML += text.charAt(i);
+    i++;
+    setTimeout(ketik, 120);
+  }
+}
+
+/* ── Counter ── */
+const mulai = new Date('2026-01-01');
+function updateCounter(){
+  const selisih = new Date() - mulai;
+  const hari = Math.floor(selisih / 86400000);
+  const el = document.getElementById('counter');
+  if(hari >= 0){
+    el.textContent = `❤️ Sudah ${hari} hari bersama ❤️`;
+  } else {
+    el.textContent = `⏳ ${Math.abs(hari)} hari lagi menuju hari spesial kita`;
+  }
+}
+
+/* ── Floating hearts ── */
+const heartEmojis = ['❤️','🩷','💕','💗','💓','💖'];
+function buatHati(){
+  const h = document.createElement('div');
+  h.className = 'heart';
+  h.textContent = heartEmojis[Math.floor(Math.random()*heartEmojis.length)];
+  h.style.left     = Math.random()*100 + 'vw';
+  h.style.animationDuration = (4 + Math.random()*4) + 's';
+  document.body.appendChild(h);
+  setTimeout(() => h.remove(), 8000);
+}
+
+/* ── Click spark ── */
+document.addEventListener('click', e => {
+  const sp = document.createElement('div');
+  sp.className = 'spark';
+  sp.textContent = heartEmojis[Math.floor(Math.random()*heartEmojis.length)];
+  sp.style.left = e.clientX + 'px';
+  sp.style.top  = e.clientY + 'px';
+  document.body.appendChild(sp);
+  setTimeout(() => sp.remove(), 900);
+});
+
+/* ── Love button ── */
+function tampilLove(){
+  const msg = document.getElementById('loveMsg');
+  msg.style.display = 'block';
+  // burst of hearts
+  for(let j=0;j<8;j++) setTimeout(buatHati, j*80);
+}
+
+/* ── Scroll reveal ── */
+function initReveal(){
+  const els = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting) e.target.classList.add('shown');
+    });
+  }, { threshold: 0.15 });
+  els.forEach(el => obs.observe(el));
+}
+</script>
+</body>
+</html>
